@@ -11,6 +11,57 @@
         </head>
         <body>
         <div class="login-form">
+            <?php 
+                if(isset($_GET['reg_err']))
+                {
+                    $err = htmlspecialchars($_GET['reg_err']);
+
+                    switch ($err) {
+                        case 'success':
+                            ?>
+                            <div class="alert alert-success">
+                                <strong>Succès</strong>Inscription réussie
+                            </div>
+                            <?php
+                        break;
+                        case 'password':
+                            ?>
+                            <div class="alert alert-danger">
+                                <strong>Succès</strong> mot de passe different
+                            </div>
+                            <?php
+                        break;
+                        case 'email':
+                            ?>
+                            <div class="alert alert-danger">
+                                <strong>Succès</strong>email non valide
+                            </div>
+                            <?php
+                        break;
+                        case 'email_length':
+                            ?>
+                            <div class="alert alert-danger">
+                                <strong>Succès</strong>email trop long
+                            </div>
+                            <?php
+                        break;
+                        case 'pseudo_length':
+                            ?>
+                            <div class="alert alert-danger">
+                                <strong>Succès</strong>pseudo trop long
+                            </div>
+                            <?php
+                        break;
+                        case 'already':
+                            ?>
+                            <div class="alert alert-danger">
+                                <strong>Succès</strong>compte deja existant
+                            </div>
+                            <?php
+                        break;    
+                    }
+                }
+            ?>
             <form action="inscription_traitement.php" method="post">
                 <h2 class="text-center">Inscription</h2>       
                 <div class="form-group">
