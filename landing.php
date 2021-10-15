@@ -1,7 +1,12 @@
 <?php 
     session_start();
+    require_once'config.php';
     if(!isset($_SESSION['user']))
         header('Location:index.php');
+    die();
+    $req = $bdd->prepare('SELECT * FROM utilisateurs where pseudo=?');
+    $req->execute($_SESSION['user']);
+    $data = $req->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +20,7 @@
     <title>Welcome</title>
 </head>
 <body>
-    <h1> Welcome ! <?php echo $_SESSION['user'];?></h1>
+    <h1> Welcome ! <?php echo $data['pseudo'];?></h1>
     <a href="deconnexion.php" class="btn btn-danger btn-lg">Déconnexion</a>
     
 </body>

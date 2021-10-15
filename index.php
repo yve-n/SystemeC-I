@@ -16,7 +16,7 @@
                 {
                     $err = htmlspecialchars($_GET['login_err']);
 
-                    switch ($err) {
+                    switch($err) {
                         case 'password':
                             ?> 
                             <div class="alert alert-danger">

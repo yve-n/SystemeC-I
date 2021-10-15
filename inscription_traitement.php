@@ -1,7 +1,7 @@
 <?php 
 require_once 'config.php';
 
-if(isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['password_retype'])){
+if(!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['password_retype'])){
 
     $pseudo = htmlspecialchars($_POST['pseudo']);
     $email = htmlspecialchars($_POST['email']);
@@ -13,6 +13,8 @@ if(isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['passwor
     $data = $check->fetch();
     $row = $check->rowCount();
 
+    $email = strtolower($email);
+
     if($row == 0 ){
         if(strlen($pseudo <= 100))
         {
@@ -20,24 +22,43 @@ if(isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['passwor
             {
                 if(filter_var($email, FILTER_VALIDATE_EMAIL))
                 {
-                    if($password == $password_retype)
+                    if($password === $password_retype)
                     {
-                        $password = hash('sha256', $password);
+                        $cost = ['cost' =>12];
+                        $password = password_hash($password, PASSWORD_BCRYPT, $cost);
+
                         $ip = $_SERVER['REMOTE_ADDR'];
 
-                        $insert = $bdd->prepare('INSERT INTO utilisateurs(pseudo, email, password, ip) VALUES(:pseudo, :email, :password, :ip)');
+                        $insert = $bdd->prepare('INSERT INTO utilisateurs(pseudo, email, password, ip) VALUES(:pseudo, :email, :password, :ip,)');
                         $insert->execute(array(
                             'pseudo' => $pseudo,
                             'email' => $email,
                             '$password' => $password,
                             'ip' => $ip
+                            
                         ));
                         header('Location:inscription.php?reg_err=success');
-                    }else header('Location:inscription.php?reg_err=password');
-                }else header('Location:inscription.php?reg_err=email');   
-            }else header('Location:inscription.php?reg_err=email_length');
-        }else header('Location:inscription.php?reg_err=pseudo_length');
-    }else header('Location:inscription.php?reg_err=already');
+                        die();
+                    }else {
+                        header('Location:inscription.php?reg_err=password');
+                        die();
+                    }
+                }else {
+                    header('Location:inscription.php?reg_err=email');
+                    die();
+                }
+            }else {
+                header('Location:inscription.php?reg_err=email_length');
+                die();
+            }
+        }else {
+            header('Location:inscription.php?reg_err=pseudo_length');
+            die();
+        }
+    }else {
+        header('Location:inscription.php?reg_err=already');
+        die();
+    }
 }
 
 

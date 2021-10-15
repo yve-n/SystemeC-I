@@ -26,35 +26,35 @@
                         case 'password':
                             ?>
                             <div class="alert alert-danger">
-                                <strong>Succès</strong> mot de passe different
+                                <strong>Erreur</strong> mot de passe different
                             </div>
                             <?php
                         break;
                         case 'email':
                             ?>
                             <div class="alert alert-danger">
-                                <strong>Succès</strong>email non valide
+                                <strong>Erreur</strong>email non valide
                             </div>
                             <?php
                         break;
                         case 'email_length':
                             ?>
                             <div class="alert alert-danger">
-                                <strong>Succès</strong>email trop long
+                                <strong>Erreur</strong>email trop long
                             </div>
                             <?php
                         break;
                         case 'pseudo_length':
                             ?>
                             <div class="alert alert-danger">
-                                <strong>Succès</strong>pseudo trop long
+                                <strong>Erreur</strong>pseudo trop long
                             </div>
                             <?php
                         break;
                         case 'already':
                             ?>
                             <div class="alert alert-danger">
-                                <strong>Succès</strong>compte deja existant
+                                <strong>Erreur</strong>compte deja existant
                             </div>
                             <?php
                         break;    
